@@ -2,6 +2,7 @@ import gulp from 'gulp';
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
+import browserSync from 'browser-sync';
 
 const sass = gulpSass(dartSass);
 
@@ -14,3 +15,20 @@ function SassCompiler() {
 }
 
 gulp.task('default', SassCompiler);
+
+function browserSyncServer() {
+    browserSync.init({
+        server: {
+            baseDir: './',
+        },
+    });
+}
+
+gulp.task('browser-sync', browserSyncServer);
+
+function gulpWatch() {
+    gulp.watch('css/scss/**/*.scss', SassCompiler); // Watch all the .scss files, then run the SassCompiler task
+}
+
+gulp.task('default', gulpWatch); 
+
